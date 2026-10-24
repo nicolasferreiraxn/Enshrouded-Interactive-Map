@@ -131,7 +131,12 @@ Code comments are in Portuguese.
 - **[kfc-parser](https://github.com/Brabb3l/kfc-parser)** by brabb3l — used to read the game's resources.
 - And to my friends on the server, who tested every version in the middle of our sessions.
 
-Also by the same author: **Enshrouded Save Editor** and **Enshrouded Server Guardian**.
+## 🧩 Same family
+
+| | |
+|---|---|
+| 💾 **[Enshrouded Save Editor](https://github.com/nicolasferreiraxn/Enshrouded-Save-Editor)** | edit your character with an interface that looks like the game |
+| 🛡️ **[Enshrouded Server Guardian](https://github.com/nicolasferreiraxn/Enshrouded-Server-Guardian)** | makes the dedicated server the authority over each player's character |
 
 ---
 

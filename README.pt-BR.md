@@ -129,7 +129,12 @@ Localmente (Node 20+, Rust stable, Windows): rode `compilar.bat`.
 - **[kfc-parser](https://github.com/Brabb3l/kfc-parser)**, do brabb3l — usado para ler os recursos do jogo.
 - E aos amigos do servidor, que testaram cada versão no meio das partidas.
 
-Também do mesmo autor: **Enshrouded Save Editor** e **Enshrouded Server Guardian**.
+## 🧩 Da mesma família
+
+| | |
+|---|---|
+| 💾 **[Enshrouded Save Editor](https://github.com/nicolasferreiraxn/Enshrouded-Save-Editor)** | edite o personagem com uma interface que parece o jogo |
+| 🛡️ **[Enshrouded Server Guardian](https://github.com/nicolasferreiraxn/Enshrouded-Server-Guardian)** | faz o servidor dedicado ser a autoridade sobre o personagem de cada jogador |
 
 ---
 
