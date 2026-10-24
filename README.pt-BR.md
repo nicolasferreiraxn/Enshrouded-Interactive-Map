@@ -1,107 +1,141 @@
-# Mapa Interativo Enshrouded
+<p align="center">
+  <img src=".github/capa.png" alt="Mapa Interativo Enshrouded" width="100%">
+</p>
 
-Mapa interativo do **Enshrouded** para o segundo monitor. Lê a memória do jogo para mostrar onde você e seus
-amigos estão e tira do mapa o que já foi pego, aberto, derrotado ou minerado. O mapa é desenhado com o mesmo
-shader do mapa da tecla M.
+<h1 align="center">Mapa Interativo Enshrouded</h1>
 
-*Read this in [English](README.md).*
+<p align="center">
+  <b>O mapa do Enshrouded que sabe o que está acontecendo no seu jogo — agora.</b><br>
+  Sua posição, seus amigos e tudo o que você já fez, ao vivo, no segundo monitor.
+</p>
 
-> **Sem suporte.** Publicado para a comunidade usar, ler e melhorar. Não há atendimento nem cronograma de
-> versões. A licença permite pegar, modificar e publicar.
+<p align="center">
+  <a href="../../releases/latest"><img src="https://img.shields.io/github/v/release/nicolasferreiraxn/Enshrouded-Interactive-Map?style=for-the-badge&label=baixar&color=d4a537" alt="Baixar"></a>
+  <a href="../../actions/workflows/build.yml"><img src="https://img.shields.io/github/actions/workflow/status/nicolasferreiraxn/Enshrouded-Interactive-Map/build.yml?style=for-the-badge&label=build" alt="Build"></a>
+  <img src="https://img.shields.io/badge/Enshrouded-1.0-8b3fd1?style=for-the-badge" alt="Enshrouded 1.0">
+  <img src="https://img.shields.io/badge/Windows-10%20%7C%2011-2b6cb0?style=for-the-badge&logo=windows" alt="Windows">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/licença-MIT-3c9d5d?style=for-the-badge" alt="MIT"></a>
+</p>
 
-## De onde veio
+<p align="center">
+  🇧🇷 Português · 🇺🇸 <a href="README.md">English</a> · 🇪🇸 Español · 🇩🇪 Deutsch · 🇨🇳 简体中文
+</p>
 
-Procurei mapas interativos do Enshrouded e nenhum me agradou. Fiz o meu: no começo, só um mapa mostrando onde
-estava cada coisa, com o visual do mapa do jogo. Jogando com os amigos no nosso servidor, fui acrescentando o que
-fazia falta — minha posição em tempo real, saber o que já tinha sido feito (o baú que um amigo abriu, a planta
-colhida, a porta secreta usada), os amigos no mapa, as criaturas vivas, os pins sincronizados com o jogo.
+---
 
-A ideia central é simples: o jogo já sabe tudo isso, porque precisa saber para desenhar o mundo. O mapa só
-confere cada marcador na memória e tira o que não existe mais.
+## 🔥 De onde veio
 
-## O que ele faz
+Procurei mapas interativos do Enshrouded e nenhum me agradou. Então fiz o meu.
 
-- Mapa igual ao da tecla M (relevo, isolinhas, névoa), com sua posição e direção em tempo real.
-- Amigos no mapa, com nome.
-- Todos os marcadores com o texto exato do jogo, em **5 idiomas**: Português, English, Español, Deutsch, 简体中文.
-- Some sozinho o que já foi feito: baús, itens, plantas, botões, barreiras, portas trancadas e secretas.
-- Criaturas vivas na posição real, com a vida do alvo ao vivo.
-- Minério esgotado sai do mapa quando você termina o node.
-- Busca de item com quem dropa; **Meu filtro** para mostrar só o que você está caçando.
-- Pins sincronizados com o mapa do jogo: criar, apagar ou renomear de um lado muda do outro.
-- Rota até qualquer ponto; **F8** esconde o ponto mais perto.
+No começo era só um mapa mostrando onde estava cada coisa, com o visual do mapa do jogo. Jogando com os amigos
+no nosso servidor, fui acrescentando o que fazia falta: a minha posição em tempo real, saber o que já tinha sido
+feito — o baú que um amigo abriu, a planta colhida, a porta secreta usada —, os amigos no mapa, as criaturas
+vivas, os pins sincronizados com o jogo.
 
-## Como funciona
+A ideia é simples: **o jogo já sabe tudo isso**, porque precisa saber para desenhar o mundo. O mapa só confere
+cada marcador na memória e tira o que não existe mais.
 
-**Leitura.** O exe abre o jogo com `PROCESS_VM_READ` e lê com `ReadProcessMemory`:
+## ✨ O que ele faz
+
+| | |
+|---|---|
+| 🗺️ **O mesmo mapa da tecla M** | relevo, isolinhas e névoa, desenhados com o shader do próprio jogo |
+| 🧭 **Você em tempo real** | posição e direção, sem precisar abrir o mapa do jogo |
+| 👥 **Seus amigos** | todo mundo do servidor no mapa, com nome |
+| ✅ **Some o que já foi feito** | baús abertos, itens pegos, plantas colhidas, botões, barreiras, portas trancadas e secretas |
+| 🐺 **Criaturas vivas** | na posição real, com a vida do alvo ao vivo |
+| ⛏️ **Minério esgotado** | o node sai do mapa quando você termina de minerar |
+| 📍 **Pins sincronizados** | criar, apagar ou renomear no app muda no mapa do jogo — e vice-versa |
+| 🔎 **Busca inteligente** | ache qualquer item e veja quem dropa; **Meu filtro** mostra só o que você está caçando |
+| 🌍 **5 idiomas** | com os nomes **oficiais** do jogo em cada um |
+| 🧵 **Rota e atalhos** | rota até qualquer ponto; **F8** esconde o ponto mais perto |
+
+## 🚀 Começando
+
+1. Baixe o `.zip` na página de **[Releases](../../releases/latest)** e extraia.
+2. Abra o **`Mapa Interactive Enshrouded.exe`** com o jogo aberto.
+3. Pronto — em poucos segundos ele acha você no mapa.
+
+> 💡 Funciona melhor num segundo monitor, com o jogo em **janela sem bordas**.
+
+**Requisitos:** Windows 10/11 · Enshrouded 1.0 (Steam). Testado em outubro de 2026 — uma atualização do jogo
+pode quebrar partes até sair versão nova.
+
+**Privacidade:** nada sai da sua máquina. Sem internet, sem telemetria, sem conta.
+
+## ⚙️ Como funciona
+
+<details>
+<summary><b>Leitura da memória</b> (o mapa só lê)</summary>
+<br>
+
+O exe abre o jogo com `PROCESS_VM_READ` e lê com `ReadProcessMemory`:
 
 | dado | origem |
 |---|---|
 | posição e câmera | endereços que o app procura e valida sozinho ao abrir — costuma sobreviver a atualizações |
-| baús, itens, plantas | entidades do ECS carregadas em volta de você (~95 m); item fixo que sumiu = pego |
-| botões, barreiras, portas | componentes de alternância, trava e interação |
+| baús, itens, plantas | entidades carregadas em volta de você (~95 m); item fixo que sumiu = pego |
+| botões, barreiras, portas | estado de alternância, trava e interação |
 | criaturas | posição e vida; spawn sem criatura viva sai do mapa |
-| minério | blocos de terreno (cavados + originais); esgotado = nenhum grupo de 6+ blocos do minério |
+| minério | blocos de terreno (cavados + originais); esgotado = nenhum grupo de 6+ blocos |
 | histórias lidas, névoa | o seu save local (`.ksd`), só leitura |
 
-O estado é lembrado depois que você se afasta e o jogo descarrega a área, então nada volta a aparecer à toa.
+O estado é lembrado depois que você se afasta, então nada volta a aparecer à toa.
+</details>
 
-**Pins.** Para criar marcadores no mapa do jogo, o exe carrega uma DLL embutida dentro do processo do jogo
+<details>
+<summary><b>Pins sincronizados</b> (a única parte que escreve no jogo)</summary>
+<br>
+
+Para criar marcadores no mapa do jogo, o exe carrega uma DLL embutida no processo do jogo
 (`LoadLibraryW` via `CreateRemoteThread`). Ela acha as funções de marcador do próprio jogo **por padrão de bytes**
-— se o padrão não aparecer exatamente uma vez, ela não faz nada — e as chama na thread do jogo, recebendo os
-pedidos por um pipe local. Os pins ficam salvos no seu personagem como qualquer marcador. É a única parte que
-escreve no jogo.
+— se o padrão não bater exatamente uma vez, ela não faz nada — e as chama na thread do jogo, recebendo os pedidos
+por um pipe local. Os pins ficam salvos no seu personagem como qualquer marcador.
+</details>
 
-## Instalação
-
-1. Baixe o `.zip` em [Releases](../../releases) e extraia.
-2. Abra o `Mapa Interactive Enshrouded.exe` com o jogo aberto.
-
-Requisitos: Windows 10/11 e Enshrouded 1.0 (Steam). Testado em outubro de 2026. Uma atualização do jogo pode
-quebrar partes até sair versão nova.
-
-Nada sai da sua máquina: sem internet, telemetria ou conta. Filtros e pins pendentes ficam no seu usuário do
-Windows.
-
-## Idiomas
+## 🌍 Idiomas
 
 | texto | origem | arquivo |
 |---|---|---|
 | nomes do jogo (itens, criaturas, missões…) | textos **oficiais** do jogo | `app/public/lang/<idioma>.json` |
-| interface (botões, menus, dicas) | tradução nossa | `app/src/i18n/<idioma>.json` |
+| interface (botões, menus, dicas) | tradução nossa — correções são bem-vindas | `app/src/i18n/<idioma>.json` |
 
-**Quer outro idioma?** Copie `app/src/i18n/en.json` para `<código>.json`, traduza os valores (sem mudar as
-chaves), adicione o idioma em `app/src/i18n.js` e abra um pull request. Os nomes do jogo do idioma novo a gente
-gera a partir dos textos oficiais; até lá aparecem em inglês.
+**Quer o mapa no seu idioma?** Copie `app/src/i18n/en.json` para `<código>.json`, traduza os valores (sem mudar
+as chaves), adicione o idioma em `app/src/i18n.js` e abra um pull request. Os nomes do jogo a gente gera a partir
+dos textos oficiais.
 
-## Compilar
+## 🛠️ Compilando
 
-Os releases são compilados pelo **GitHub Actions** a partir deste repositório, com log público
-([`build.yml`](.github/workflows/build.yml)) — dá para conferir que o binário saiu deste código.
+Os releases são compilados pelo **GitHub Actions** a partir deste repositório, com
+[log público](../../actions/workflows/build.yml) — dá para conferir que o binário saiu deste código.
 
-Localmente (Node 20+, Rust stable, Windows):
+Localmente (Node 20+, Rust stable, Windows): rode `compilar.bat`.
 
-```
-compilar.bat
-```
+<details>
+<summary>Onde fica cada coisa</summary>
+<br>
 
 | pasta | conteúdo |
 |---|---|
 | `app/src` | interface (React + Leaflet); o mapa em WebGL2 fica em `gamemap.js` |
-| `app/src-tauri/src` | memória: `tracker.rs` (posição), `live.rs` (estado ao vivo), `terreno.rs` (minério), `injetor.rs` (pins) |
+| `app/src-tauri/src` | `tracker.rs` (posição), `live.rs` (estado ao vivo), `terreno.rs` (minério), `injetor.rs` (pins) |
 | `injector/marcador` | a DLL dos pins (compilada e embutida no exe automaticamente) |
 | `app/public` | dados prontos: marcadores, ícones, tiles |
+</details>
 
-## Créditos
+## ❤️ Créditos
 
-- **Keen Games** — o Enshrouded. Nomes do jogo, shader e texturas do mapa vêm dos arquivos do jogo. Sem vínculo
-  com a Keen Games.
+- **Keen Games** — pelo Enshrouded. Nomes do jogo, shader e texturas do mapa vêm dos arquivos do jogo.
 - **[kfc-parser](https://github.com/Brabb3l/kfc-parser)**, do brabb3l — usado para ler os recursos do jogo.
+- E aos amigos do servidor, que testaram cada versão no meio das partidas.
 
-Projetos companheiros: **Enshrouded Save Editor** e
-**Enshrouded Server Guardian**.
+Também do mesmo autor: **Enshrouded Save Editor** e **Enshrouded Server Guardian**.
 
-## Licença
+---
 
-Código MIT — veja [LICENSE](LICENSE). Os dados em `app/public` pertencem à Keen Games e ao enshrouded.tools e não
-estão cobertos pela MIT.
+<p align="center">
+  <sub>
+    Projeto de fã, sem vínculo com a Keen Games. Sem suporte oficial — use, leia, modifique e publique à vontade.<br>
+    Código sob <a href="LICENSE">MIT</a>. Os dados em <code>app/public</code> pertencem à Keen Games.
+  </sub>
+</p>

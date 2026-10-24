@@ -182,10 +182,10 @@ const ORE_MAT = {
 // memória do estado ao vivo: o que foi visto pego/aberto/acionado/vazio continua assim mesmo fora da área
 // carregada (o jogo só carrega ~95 m), até ser visto de novo disponível — ou até expirar (respawn).
 const STICKY_TTL = { esgotado: 7 * 24 * 3600e3, pego: 2 * 3600e3, aberto: 365 * 24 * 3600e3, acionado: 12 * 3600e3, vazio: 30 * 60e3, ausente: 30 * 24 * 3600e3 };
-// Dupla verificação: marcadores do site que são OBJETOS (não lugares) são conferidos na memória quando estão na área
+// Dupla verificação: marcadores que são OBJETOS (não lugares) são conferidos na memória quando estão na área
 // carregada; sem nenhum objeto do jogo a até 3 m em 3 leituras seguidas = "ausente" (o ícone sai).
 const OBJ_CATS = /^(unique|fossil|music-sheet|cyclops-skeleton|drak-relief|dragons-map|pikemead-statue|wall-hanging|tapestry|flame-mosaic|lore-.*|chest-.*|pearl-clam|shroud-root|elixir-well|puzzle|secret-door)$/;
-// marcador-objeto do site na área carregada: existe algum objeto do jogo no ponto? (senão "ausente")
+// marcador-objeto na área carregada: existe algum objeto do jogo no ponto? (senão "ausente")
 function verifyObj(ls, lv, it) {
   if (!OBJ_CATS.test(it.kind || '') || !ls.t || Date.now() - ls.t > 5000 || ls.n < 50 || Math.hypot(it.x - lv.tx, it.z - lv.tz) > 80) return null;
   return anyEntityNear(ls, it.x, it.z, it.y) ? 'ok' : 'ausente';
@@ -409,7 +409,7 @@ export default function App() {
       document.documentElement.style.setProperty('--icon', `${Math.round(Math.max(18, Math.min(40, 14 + z * 4.2)))}px`);
       const el = document.getElementById('map');
       el.dataset.zoom = Math.floor(z);
-      // mesmos limites do enshrouded.tools (zoom deles + 0,68 = o nosso)
+      // limites de zoom do mapa
       el.dataset.ltier = z >= 5.08 ? 3 : z >= 4.28 ? 2 : z >= 3.28 ? 1 : 0;
     };
     map.on('zoomend', onZoom); onZoom();
@@ -979,7 +979,7 @@ export default function App() {
         if (sts.every((s) => s === 'pego') && !wasOpen) { opened.add(key); if (hideTaken) g.removeLayer(mk); else mk.setOpacity?.(0.3); }
         else if (sts.some((s) => s === 'ok') && wasOpen) { opened.delete(key); if (!g.hasLayer(mk)) g.addLayer(mk); mk.setOpacity?.(1); }
       };
-      // dupla verificação dos objetos do site (ver OBJ_CATS)
+      // dupla verificação dos objetos (ver OBJ_CATS)
       const fresh = ls.t && Date.now() - ls.t < 5000 && ls.n > 50;
       for (const [pi, r] of Object.entries(markerRefs.current)) {
         const p = data.points[+pi];

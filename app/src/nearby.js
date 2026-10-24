@@ -3,7 +3,7 @@ import { t } from './i18n.js';
 const CELL = 64;
 // ícone dos recursos do mundo pelo que eles dão
 const RES_IMG = { 'Árvore': 'et/items/wood-logs.webp', 'Galhos/tronco caído': 'et/items/twigs.webp', 'Arbusto': 'et/items/twigs.webp', 'Pedra (recurso)': 'items/stone.webp' };
-const CHEST = { 'Baú de Ouro': 'et/pins/chest-gold.png', 'Baú de Prata': 'et/pins/chest-silver.png', 'Baú de Madeira': 'et/pins/chest-wood.png' }; // pinos do enshrouded.tools
+const CHEST = { 'Baú de Ouro': 'et/pins/chest-gold.png', 'Baú de Prata': 'et/pins/chest-silver.png', 'Baú de Madeira': 'et/pins/chest-wood.png' };
 
 export async function loadNearby(points, cats) {
   const buf = await (await fetch('./nearby.bin')).arrayBuffer();
@@ -22,7 +22,7 @@ export async function loadNearby(points, cats) {
   };
   const catMap = Object.fromEntries(cats.map((c) => [c.id, c]));
   // baús: os do jogo (nearby.bin) têm a altura exata, então valem em todo lugar;
-  // os do site só entram onde o jogo não tem baú a menos de 6 m
+  // os dos marcadores só entram onde o jogo não tem baú a menos de 6 m
   const chestCell = new Set();
   const cellKey = (x, z) => `${Math.round(x / 6)},${Math.round(z / 6)}`;
   const hasChest = (x, z) => { const a = Math.round(x / 6), b = Math.round(z / 6); for (let i = -1; i <= 1; i++) for (let j = -1; j <= 1; j++) if (chestCell.has(`${a + i},${b + j}`)) return true; return false; };
@@ -46,7 +46,7 @@ export async function loadNearby(points, cats) {
     }
     add({ x, z, y, n: l.n, kind: 'item', img: l.img });
   }
-  // pontos de surgimento de criaturas (enshrouded.tools + altura do jogo)
+  // pontos de surgimento de criaturas (com a altura do jogo)
   try {
     const mobs = await (await fetch('./mobs.json')).json();
     for (const [x, z, y, ni] of mobs.pts) {

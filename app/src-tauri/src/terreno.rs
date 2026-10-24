@@ -273,7 +273,7 @@ impl Terreno {
         column_sub(b.get(d + off..d + end)?, vy >> 3)
     }
 
-    /// estado de um depósito do enshrouded.tools (x, z, m³, altura) para o material:
+    /// estado de um depósito de minério (x, z, m³, altura) para o material:
     /// 0 intocado (nada mexido em volta e o mundo base carregado: o minério está lá), 1 ainda tem minério, 2 esgotado (mexido e nenhum grupo de MIN_GRUPO blocos
     /// encostados do material, contando a parte mexida e a original), 3 sem dados (mundo base longe, não carregado)
     fn deposit(&mut self, x: f32, z: f32, m3: f32, h: f32, mat: u8) -> u8 {

@@ -152,7 +152,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .gamemap { position: absolute; left: 0; top: 0; pointer-events: none; }
 .num { width: 60px; background: #171717; border: 1px solid #333; color: var(--text); font: inherit; padding: 2px 6px; }
 
-/* ===== menu lateral no formato do enshrouded.tools ===== */
+/* ===== menu lateral ===== */
 .side { padding: 0; }
 .inner { padding: 22px 20px 30px; }
 .sbhead { text-align: center; margin-bottom: 18px; }

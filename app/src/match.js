@@ -1,5 +1,5 @@
 // Busca tolerante: sem acento, palavras em qualquer ordem, aceita variações ("caida" ~ "caído",
-// "monstruosidade" ~ "monstruoso") e procura também no nome em inglês do enshrouded.tools.
+// "monstruosidade" ~ "monstruoso") e procura também no nome em inglês.
 export const norm = (s) => (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 const words = (s) => norm(s).split(/[^a-z0-9]+/).filter(Boolean);
 function pre(a, b) { let i = 0; while (i < a.length && i < b.length && a[i] === b[i]) i++; return i; }
