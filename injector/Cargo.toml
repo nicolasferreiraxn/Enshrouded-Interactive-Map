@@ -1,0 +1,8 @@
+[workspace]
+members = ["marcador"]
+resolver = "2"
+
+[profile.release]
+# unwind (não abort): um panic na DLL não pode derrubar o jogo; on_tick usa catch_unwind
+panic = "unwind"
+opt-level = 2

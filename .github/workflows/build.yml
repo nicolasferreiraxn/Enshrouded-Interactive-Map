@@ -1,0 +1,67 @@
+# Compila o mapa (Tauri, com a DLL dos pins embutida) e, quando a tag começa com v, publica um release com o .zip.
+#
+# O log deste build é público de propósito: é a forma de qualquer pessoa conferir que o binário anexado a um
+# release saiu deste código, neste commit, sem passar pela máquina de ninguém.
+name: build
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: x86_64-pc-windows-msvc
+
+      - name: Compilar o mapa (a DLL dos pins é compilada e embutida pelo build.rs)
+        working-directory: app
+        run: |
+          npm ci
+          npm run dist
+
+      - name: Montar o pacote
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force release | Out-Null
+          Copy-Item "app/src-tauri/target/release/embervale-map.exe" "release/Mapa Interactive Enshrouded.exe"
+          $t = (Get-Item "release/Mapa Interactive Enshrouded.exe").Length
+          Write-Host "Mapa Interactive Enshrouded.exe: $t bytes"
+          if ($t -lt 10MB) { throw "exe do mapa pequeno demais; build suspeito" }
+          Compress-Archive -Path release/* -DestinationPath Mapa-Interactive-Enshrouded.zip
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Mapa-Interactive-Enshrouded
+          path: Mapa-Interactive-Enshrouded.zip
+          if-no-files-found: error
+
+      - name: Publicar release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: Mapa-Interactive-Enshrouded.zip
+          generate_release_notes: true
+          body: |
+            Extraia o .zip e abra o `Mapa Interactive Enshrouded.exe` com o jogo aberto.
+            Extract the .zip and open `Mapa Interactive Enshrouded.exe` with the game running.
+
+            Compilado pelo GitHub Actions a partir deste repositório — o log do build é público na aba Actions.
+            Built by GitHub Actions from this repository — the build log is public in the Actions tab.
