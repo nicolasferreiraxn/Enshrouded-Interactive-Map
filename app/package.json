@@ -1,6 +1,6 @@
 {
   "name": "embervale-map",
-  "version": "0.1.0",
+  "version": "1.0.1",
   "private": true,
   "description": "Mapa interativo do Enshrouded em PT-BR com a posição do jogador e o estado do mundo em tempo real",
   "scripts": {

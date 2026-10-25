@@ -1,6 +1,6 @@
 [package]
 name = "embervale-map"
-version = "0.1.0"
+version = "1.0.1"
 edition = "2021"
 description = "Mapa de Embervale com a posição do jogador em tempo real"
 

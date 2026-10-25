@@ -351,16 +351,20 @@ pub(crate) fn read_world_pos(p: &Proc, base: u64) -> Option<[f32; 3]> {
 }
 
 // Modo principal: lê a posição exata pelo ponteiro fixo, 30 vezes por segundo.
-// Devolve false se o ponteiro não servir (outra versão do jogo) para cair na busca heurística.
+// Fica nele enquanto o jogo estiver aberto (esperando o personagem aparecer, se for o caso); devolve true quando o
+// processo muda. A busca heurística antiga só roda com EMB_HEURISTIC.
 fn run_pointer(p: &Proc, pid: u32, emit: &mut impl FnMut(&PlayerState)) -> bool {
-    let Some(base) = module_base(p) else { return false };
+    // jogo recém-aberto: a lista de módulos ainda pode não estar pronta; tenta de novo em vez de cair na heurística
+    let Some(base) = module_base(p) else {
+        std::thread::sleep(Duration::from_secs(1));
+        return true;
+    };
     let mut fails = 0;
     let mut last: Option<[f32; 3]> = None;
     let mut anchor: Option<[f32; 3]> = None;
     let mut heading = 0f32;
     let mut still_since = Instant::now();
     let mut tick = 0u64;
-    let mut ok_once = false;
     loop {
         tick += 1;
         if tick % 60 == 0 && find_pid() != Some(pid) {
@@ -368,16 +372,18 @@ fn run_pointer(p: &Proc, pid: u32, emit: &mut impl FnMut(&PlayerState)) -> bool 
         }
         match read_world_pos(p, base) {
             None => {
+                // sem personagem ainda (menu, tela de carregamento, mapa aberto antes do jogo): continua esperando
+                // aqui. Antes, 3 s sem leitura e sem nunca ter lido faziam cair na busca heurística antiga, que
+                // nunca voltava — com o mapa aberto antes do jogo, o personagem não era mais achado.
                 fails += 1;
-                if fails > 90 {
-                    return ok_once; // 3 s sem leitura: tela de carregamento ou versão diferente
+                if fails % 90 == 0 {
+                    emit(&PlayerState { status: "procurando", ..Default::default() });
                 }
                 std::thread::sleep(Duration::from_millis(33));
                 continue;
             }
             Some([x, y, z]) => {
                 fails = 0;
-                ok_once = true;
                 if let Some(l) = last {
                     if dist2(l, x, z) > 0.01 {
                         still_since = Instant::now();
