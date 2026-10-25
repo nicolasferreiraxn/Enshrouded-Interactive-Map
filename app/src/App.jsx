@@ -2,7 +2,7 @@ import { icSrc } from './match.js';
 import { fmatch } from './match.js';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import L from 'leaflet';
-import { onPlayer, onDismiss, onLive, currentSave, fogOfWar, relocate, myPins, gameConnect, gameReq, saveMyPins, playerKnowledge, oreState } from './bridge.js';
+import { onPlayer, onDismiss, onLive, currentSave, fogOfWar, relocate, myPins, gameConnect, gameReq, saveMyPins, playerKnowledge, oreState, relaunchAdmin } from './bridge.js';
 import { loadNearby, bearing, dirName, heightText } from './nearby.js';
 import { GameMapLayer } from './gamemap.js';
 import Sidebar from './Sidebar.jsx';
@@ -1095,7 +1095,14 @@ export default function App() {
   }, [data]);
   const setAll = (v) => setVisible(Object.fromEntries(data.cats.map((c) => [c.id, v])));
   const isLive = player.status === 'ok' || player.status === 'parado';
-  const statusText = { fechado: t('status.closed'), procurando: t('status.searching'), parado: t('status.located'), ok: t('status.tracking') }[player.status] || player.status;
+  const statusText = { fechado: t('status.closed'), sem_acesso: t('status.no_access'), procurando: t('status.searching'), sem_personagem: t('status.no_character'), parado: t('status.located'), ok: t('status.tracking') }[player.status] || player.status;
+  // jogo aberto mas ilegível (Windows negou o acesso) ou sem personagem há muito tempo: explica o que fazer
+  const alertBar = player.status === 'sem_acesso' ? (
+    <div className="alertbar">
+      <span>{player.admin ? t('alert.no_access_admin', { code: player.erro }) : t('alert.no_access', { code: player.erro })}</span>
+      {!player.admin && <button className="btn" onClick={() => relaunchAdmin().catch(() => setToast(t('alert.relaunch_fail')))}>{t('alert.relaunch')}</button>}
+    </div>
+  ) : player.status === 'sem_personagem' ? <div className="alertbar"><span>{t('alert.no_character')}</span></div> : null;
 
   // painel de navegação
   let nav = null;
@@ -1116,6 +1123,7 @@ export default function App() {
         <button className="btn reloc" title={t('top.relocate_title')} onClick={() => { live.current.have = false; relocate(); }}>{t('top.relocate')}</button>
         {isLive && <div className="coords">X {Math.round(player.x)} · Z {Math.round(player.z)} · {t('top.alt', { n: Math.round(player.y) })}</div>}
       </header>
+      {alertBar}
       <aside className="side">
         <Sidebar data={data} tab={tab} setTab={setTab} query={query} setQuery={setQuery}
           results={results.map((r) => ({ ...r, dist: isLive ? m(Math.hypot(r.x - player.x, r.z - player.z)) : null }))}

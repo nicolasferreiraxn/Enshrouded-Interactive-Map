@@ -195,5 +195,12 @@
   "progress.export_title": "Deinen Fortschritt in einer Datei speichern",
   "progress.import": "Importieren",
   "progress.import_title": "Fortschritt aus einer Datei laden",
-  "status.markers": "{total} Markierungen auf der Karte, {shown} in den sichtbaren Kategorien. Klick: Route · Rechtsklick: als gefunden markieren."
+  "status.markers": "{total} Markierungen auf der Karte, {shown} in den sichtbaren Kategorien. Klick: Route · Rechtsklick: als gefunden markieren.",
+  "status.no_access": "Enshrouded läuft, aber kein Lesezugriff",
+  "status.no_character": "Spiel läuft, Charakter nicht gefunden",
+  "alert.no_access": "Enshrouded läuft, aber Windows lässt die Karte das Spiel nicht lesen (Code {code}). Das passiert, wenn das Spiel oder Steam als Administrator läuft. Starte die Karte als Administrator neu.",
+  "alert.no_access_admin": "Die Karte läuft bereits als Administrator und Windows hat das Lesen trotzdem blockiert (Code {code}). Wahrscheinlich ist es dein Virenschutz: füge die Karte zu dessen Ausnahmen hinzu.",
+  "alert.no_character": "Das Spiel läuft, aber seit über 2 Minuten ist kein Charakter erschienen. Wenn du schon in der Welt bist, wird diese Spielversion von der Karte eventuell noch nicht unterstützt.",
+  "alert.relaunch": "Als Administrator neu starten",
+  "alert.relaunch_fail": "Windows hat die Karte nicht als Administrator gestartet."
 }

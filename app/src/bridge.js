@@ -63,6 +63,13 @@ export async function oreState(deps) {
   return invoke('ore_state', { deps });
 }
 
+// reabre o mapa como administrador (quando o Windows nega a leitura do jogo)
+export async function relaunchAdmin() {
+  if (!T) return;
+  const { invoke } = await import('@tauri-apps/api/core');
+  return invoke('relaunch_admin');
+}
+
 export async function relocate() {
   if (!T) return;
   const { invoke } = await import('@tauri-apps/api/core');

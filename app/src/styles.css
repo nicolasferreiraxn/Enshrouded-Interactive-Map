@@ -344,3 +344,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 .chestlv select { background: #0006; color: inherit; border: 1px solid #fff3; margin: 0 4px; font: inherit; }
 .ctxmenu .renin { background: #0008; color: inherit; border: 1px solid #c9a96a88; border-radius: 3px; padding: 5px 6px; font: inherit; min-width: 220px; outline: none; }
+
+.live.sem_acesso i { background: #e0533a; box-shadow: 0 0 10px #e0533a; }
+.live.sem_acesso, .live.sem_personagem { color: #f0c9b8; }
+.live.sem_personagem i { background: #d88a3a; }
+.alertbar { position: absolute; top: 64px; left: 50%; transform: translateX(-50%); z-index: 2000; display: flex; align-items: center; gap: 14px; max-width: min(900px, 92vw); padding: 10px 16px; background: #2a1410f2; border: 1px solid #e0533a99; border-radius: 6px; color: #f3dccf; font-size: 14px; line-height: 1.4; box-shadow: 0 6px 24px #0008; }
+.alertbar .btn { flex: none; }

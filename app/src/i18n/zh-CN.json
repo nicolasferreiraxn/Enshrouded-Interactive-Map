@@ -195,5 +195,12 @@
   "progress.export_title": "将进度保存到文件",
   "progress.import": "导入",
   "progress.import_title": "从文件加载进度",
-  "status.markers": "地图上共有 {total} 个标记，可见类别中有 {shown} 个。点击：导航 · 右键：标为已找到。"
+  "status.markers": "地图上共有 {total} 个标记，可见类别中有 {shown} 个。点击：导航 · 右键：标为已找到。",
+  "status.no_access": "Enshrouded 已运行，但没有读取权限",
+  "status.no_character": "游戏已运行，未找到角色",
+  "alert.no_access": "Enshrouded 正在运行，但 Windows 不允许地图读取游戏（代码 {code}）。当游戏或 Steam 以管理员身份运行时会出现这种情况。请以管理员身份重新打开地图。",
+  "alert.no_access_admin": "地图已以管理员身份运行，Windows 仍然阻止了读取游戏（代码 {code}）。很可能是杀毒软件：请将地图加入其例外列表。",
+  "alert.no_character": "游戏已运行，但超过 2 分钟没有出现角色。如果你已经在世界中，可能是地图暂不支持此游戏版本。",
+  "alert.relaunch": "以管理员身份重新打开",
+  "alert.relaunch_fail": "Windows 未能以管理员身份重新打开地图。"
 }

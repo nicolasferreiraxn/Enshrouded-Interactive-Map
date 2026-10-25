@@ -7,7 +7,7 @@
 use serde::Serialize;
 use std::collections::HashMap;
 use std::time::{Duration, Instant};
-use windows_sys::Win32::Foundation::{CloseHandle, HANDLE};
+use windows_sys::Win32::Foundation::{CloseHandle, GetLastError, HANDLE};
 use windows_sys::Win32::System::Diagnostics::Debug::ReadProcessMemory;
 use windows_sys::Win32::System::Diagnostics::ToolHelp::{
     CreateToolhelp32Snapshot, Process32FirstW, Process32NextW, PROCESSENTRY32W, TH32CS_SNAPPROCESS,
@@ -19,7 +19,11 @@ use windows_sys::Win32::System::Threading::{OpenProcess, PROCESS_QUERY_INFORMATI
 
 #[derive(Clone, Serialize, Default)]
 pub struct PlayerState {
-    pub status: &'static str, // "fechado" | "procurando" | "parado" | "ok"
+    // "fechado" | "sem_acesso" (o Windows negou abrir/ler o jogo) | "procurando" | "sem_personagem" (jogo aberto e
+    // legível, mas nenhum personagem há mais de 2 min: menu, ou versão do jogo que o mapa não conhece) | "parado" | "ok"
+    pub status: &'static str,
+    pub erro: u32,     // código do Windows quando "sem_acesso" (5 = acesso negado)
+    pub admin: bool,   // o mapa está rodando como administrador
     pub x: f32,
     pub y: f32,
     pub z: f32,
@@ -65,8 +69,12 @@ impl Drop for Proc {
 }
 impl Proc {
     pub(crate) fn open(pid: u32) -> Option<Proc> {
+        Self::open_err(pid).ok()
+    }
+    /// abre o jogo para leitura; Err = código do Windows (5 = acesso negado: jogo elevado ou antivírus)
+    pub(crate) fn open_err(pid: u32) -> Result<Proc, u32> {
         let h = unsafe { OpenProcess(PROCESS_VM_READ | PROCESS_QUERY_INFORMATION, 0, pid) };
-        if h.is_null() { None } else { Some(Proc { h, pid }) }
+        if h.is_null() { Err(unsafe { GetLastError() }) } else { Ok(Proc { h, pid }) }
     }
     pub(crate) fn read(&self, addr: u64, buf: &mut [u8]) -> usize {
         let mut n: usize = 0;
@@ -354,11 +362,24 @@ pub(crate) fn read_world_pos(p: &Proc, base: u64) -> Option<[f32; 3]> {
 // Fica nele enquanto o jogo estiver aberto (esperando o personagem aparecer, se for o caso); devolve true quando o
 // processo muda. A busca heurística antiga só roda com EMB_HEURISTIC.
 fn run_pointer(p: &Proc, pid: u32, emit: &mut impl FnMut(&PlayerState)) -> bool {
-    // jogo recém-aberto: a lista de módulos ainda pode não estar pronta; tenta de novo em vez de cair na heurística
-    let Some(base) = module_base(p) else {
+    // jogo recém-aberto: a lista de módulos ainda pode não estar pronta; tenta de novo em vez de cair na heurística.
+    // Se continuar falhando (ou o cabeçalho do exe não puder ser lido), o Windows está bloqueando a leitura.
+    static FALHAS: std::sync::atomic::AtomicU32 = std::sync::atomic::AtomicU32::new(0);
+    let base = module_base(p).filter(|&b| {
+        let mut mz = [0u8; 2];
+        p.read(b, &mut mz) == 2 && mz == *b"MZ"
+    });
+    let Some(base) = base else {
+        let e = unsafe { GetLastError() };
+        if FALHAS.fetch_add(1, std::sync::atomic::Ordering::Relaxed) >= 5 {
+            emit(&PlayerState { status: "sem_acesso", erro: if e == 0 { 5 } else { e }, admin: is_admin(), ..Default::default() });
+        }
         std::thread::sleep(Duration::from_secs(1));
         return true;
     };
+    FALHAS.store(0, std::sync::atomic::Ordering::Relaxed);
+    let inicio = Instant::now();
+    let mut leu = false;
     let mut fails = 0;
     let mut last: Option<[f32; 3]> = None;
     let mut anchor: Option<[f32; 3]> = None;
@@ -377,13 +398,16 @@ fn run_pointer(p: &Proc, pid: u32, emit: &mut impl FnMut(&PlayerState)) -> bool 
                 // nunca voltava — com o mapa aberto antes do jogo, o personagem não era mais achado.
                 fails += 1;
                 if fails % 90 == 0 {
-                    emit(&PlayerState { status: "procurando", ..Default::default() });
+                    // nunca achou o personagem em 2 min com o jogo legível: menu parado ou versão do jogo desconhecida
+                    let st = if !leu && inicio.elapsed() > Duration::from_secs(120) { "sem_personagem" } else { "procurando" };
+                    emit(&PlayerState { status: st, admin: is_admin(), ..Default::default() });
                 }
                 std::thread::sleep(Duration::from_millis(33));
                 continue;
             }
             Some([x, y, z]) => {
                 fails = 0;
+                leu = true;
                 if let Some(l) = last {
                     if dist2(l, x, z) > 0.01 {
                         still_since = Instant::now();
@@ -415,6 +439,7 @@ fn run_pointer(p: &Proc, pid: u32, emit: &mut impl FnMut(&PlayerState)) -> bool 
                     heading,
                     copies: 1,
                     candidates: 0,
+                    ..Default::default()
                 });
             }
         }
@@ -433,9 +458,15 @@ pub fn run(mut emit: impl FnMut(&PlayerState)) {
             std::thread::sleep(Duration::from_secs(2));
             continue;
         };
-        let Some(p) = Proc::open(pid) else {
-            std::thread::sleep(Duration::from_secs(2));
-            continue;
+        let p = match Proc::open_err(pid) {
+            Ok(p) => p,
+            Err(e) => {
+                // o jogo está aberto, mas o Windows não deixa ler: avisa na tela em vez de ficar em silêncio
+                state = PlayerState { status: "sem_acesso", erro: e, admin: is_admin(), ..Default::default() };
+                emit(&state);
+                std::thread::sleep(Duration::from_secs(2));
+                continue;
+            }
         };
         if std::env::var("EMB_HEURISTIC").is_err() && run_pointer(&p, pid, &mut emit) {
             continue;
@@ -694,9 +725,19 @@ pub fn run(mut emit: impl FnMut(&PlayerState)) {
                 heading,
                 copies: locked.len(),
                 candidates: cands.len(),
+                ..Default::default()
             };
             emit(&state);
             std::thread::sleep(Duration::from_millis(50));
         }
     }
+}
+
+/// o mapa está rodando elevado (administrador)?
+pub fn is_admin() -> bool {
+    #[link(name = "shell32")]
+    extern "system" {
+        fn IsUserAnAdmin() -> i32;
+    }
+    unsafe { IsUserAnAdmin() != 0 }
 }

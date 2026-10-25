@@ -2,10 +2,8 @@
   "app.title": "Mapa Interactive Enshrouded",
   "app.brand_suffix": ".MAP",
   "lang.title": "Language",
-
   "unit.m": "{n} m",
   "unit.km": "{n} km",
-
   "dir.n": "North",
   "dir.ne": "Northeast",
   "dir.e": "East",
@@ -14,7 +12,6 @@
   "dir.sw": "Southwest",
   "dir.w": "West",
   "dir.nw": "Northwest",
-
   "height.same": "same level",
   "height.above": "{n} m above",
   "height.below": "{n} m below",
@@ -22,16 +19,13 @@
   "height.above_you": "{n} m above you",
   "height.below_you": "{n} m below you",
   "height.unknown": "height unknown",
-
   "status.closed": "Enshrouded is closed",
   "status.searching": "Looking for your character… walk a few steps",
   "status.located": "Character located",
   "status.tracking": "Tracking in real time",
-
   "top.relocate": "RELOCATE",
   "top.relocate_title": "Use this if the arrow is in the wrong place: walk a few steps after clicking",
   "top.alt": "Alt. {n} m",
-
   "ctx.pin_here": "📍 Place pin here",
   "ctx.route_here": "➜ Route to here",
   "ctx.found_toggle": "✓ Found / undo",
@@ -43,7 +37,6 @@
   "ctx.delete_game": "🗑 Delete (in the game too)",
   "ctx.rename_title": "Rename (Enter confirms, Esc cancels)",
   "target.marked_point": "Marked point",
-
   "tip.read": "✓ already read (from your save)",
   "tip.unread": "not read yet",
   "tip.level": "level {n}",
@@ -58,7 +51,6 @@
   "tip.hp": "health {hp}/{max}",
   "tip.opened": "already opened",
   "tip.taken": "already taken",
-
   "live.alive": "{name} (alive)",
   "live.creature": "Creature",
   "loot.item": "item",
@@ -70,24 +62,20 @@
   "loot.ground": "On the ground",
   "loot.ground_object": "Object on the ground (bait/trap?)",
   "loot.monster": "Monster loot",
-
   "st.taken": "Already taken (no longer in the game)",
   "st.opened": "Chest already opened",
   "st.triggered": "Already activated",
   "st.empty": "No living creature here right now",
   "st.absent": "Checked in memory: no longer in the game",
-
   "toast.f8_nopos": "F8: character position not read yet",
   "toast.f8_none": "F8: no marker within 25 m",
   "toast.hidden": "Hidden: {name} (returns in 30 min or when you move 300 m away)",
   "dchip.title": "Show the markers hidden with F8 again",
   "dchip.text_one": "F8: {n} hidden · show",
   "dchip.text_other": "F8: {n} hidden · show",
-
   "export.copied": "Progress copied to the clipboard.",
   "export.copy_prompt": "Copy your progress:",
   "import.prompt": "Paste the exported progress here:",
-
   "pins.default": "Pin {n}",
   "pins.list_failed": "listing failed",
   "pins.app_only": "only in the app",
@@ -112,7 +100,6 @@
   "pins.delete_game": "delete (in the game too)",
   "pins.pending": "(pending)",
   "pins.file": "From file ({n})",
-
   "live.character": "Character",
   "live.situation": "Status",
   "live.position": "Position",
@@ -123,14 +110,12 @@
   "live.flame_level": "Flame Level",
   "live.isolines": "Contour lines every",
   "live.foot": "The position is read from the game's memory (read-only). If it says \"looking\", walk a few steps so the program can identify your character.",
-
   "nav.dead": "dead",
   "nav.gone": "looted / out of range",
   "nav.view": "Show on map",
   "nav.remove": "Remove destination",
   "nav.relative": "relative to where you face",
   "nav.waiting": "Waiting for the character position…",
-
   "near.title": "REAL-TIME ACTIVITIES",
   "near.hide_taken": "Hide what was already taken",
   "near.hide_taken_title": "Read from the game's memory: hides items already collected, runes already picked up and chests already looted",
@@ -150,36 +135,30 @@
   "ng.res": "Resources",
   "ng.loot": "Loot",
   "ng.mark": "Markers",
-
   "noun.spawns": "spawn points",
   "noun.gather": "locations",
   "noun.ore": "deposits",
   "noun.chests": "chests may contain it",
-
   "ores.title": "Ores and minerals",
   "ores.count": "{n} deposits",
   "ores.surface": "Hide buried deposits",
   "ores.more": "Archaic Essence, bones and twigs ({n})",
-
   "quests.loading": "Loading quests…",
   "quests.back": "‹ Back",
   "quests.view": "show on map ›",
   "quests.search": "Search quests",
   "quests.steps_one": "{n} step",
   "quests.steps_other": "{n} steps",
-
   "side.eyebrow": "Interactive map of Embervale",
   "tab.markers": "Markers",
   "tab.quests": "Quests",
   "tab.live": "Live",
   "tab.pins": "Pins",
-
   "search.placeholder": "Search places and markers",
   "search.place": "Place",
   "search.drops_from": "Dropped by: {list}",
   "search.show_on_map": "show on map",
   "search.on_map": "on the map",
-
   "tools.show_all": "Show all",
   "tools.hide_all": "Hide all",
   "tools.place_names": "Place names",
@@ -190,18 +169,15 @@
   "tools.chest_level_title": "Level of the items the chest gives (Flame zone). Applies to chests in the markers and in My filter.",
   "tools.to": "to",
   "tools.fog": "Fog of war",
-
   "filter.title": "My filter",
   "filter.empty": "Nothing selected. Click bosses, creatures, ores or items below to build what you want to see on the map.",
   "filter.off": "Turn off",
   "filter.clear": "Clear all",
-
   "act.title": "Real-time activities",
   "act.near": "{n} nearby",
   "act.off": "off",
   "act.radius": "Radius",
   "act.dungeon": "Dungeon mode",
-
   "find.placeholder": "Find a creature, plant, ore or chest item",
   "find.drops_from": "{item} — dropped by",
   "find.bosses": "Bosses",
@@ -213,12 +189,18 @@
   "find.on_one": "{n} on, ",
   "find.on_other": "{n} on, ",
   "find.drops": "Drops: {list}",
-
   "groups.toggle": "Show/hide the group",
   "progress.found": "{a} of {b} found",
   "progress.export": "Export",
   "progress.export_title": "Save your progress to a file",
   "progress.import": "Import",
   "progress.import_title": "Load progress from a file",
-  "status.markers": "{total} markers on the map, {shown} in the visible categories. Click: route · right-click: mark as found."
+  "status.markers": "{total} markers on the map, {shown} in the visible categories. Click: route · right-click: mark as found.",
+  "status.no_access": "Enshrouded open, but no permission to read it",
+  "status.no_character": "Game open, character not found",
+  "alert.no_access": "Enshrouded is running, but Windows won't let the map read the game (code {code}). This happens when the game or Steam runs as administrator. Reopen the map as administrator.",
+  "alert.no_access_admin": "The map is already running as administrator and Windows still blocked reading the game (code {code}). It's most likely your antivirus: add the map to its exceptions list.",
+  "alert.no_character": "The game is running, but no character has shown up for over 2 minutes. If you're already in the world, this game version may not be supported by the map yet.",
+  "alert.relaunch": "Reopen as administrator",
+  "alert.relaunch_fail": "Windows didn't reopen the map as administrator."
 }

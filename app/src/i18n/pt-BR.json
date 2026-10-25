@@ -2,10 +2,8 @@
   "app.title": "Mapa Interactive Enshrouded",
   "app.brand_suffix": ".MAPA",
   "lang.title": "Idioma",
-
   "unit.m": "{n} m",
   "unit.km": "{n} km",
-
   "dir.n": "Norte",
   "dir.ne": "Nordeste",
   "dir.e": "Leste",
@@ -14,7 +12,6 @@
   "dir.sw": "Sudoeste",
   "dir.w": "Oeste",
   "dir.nw": "Noroeste",
-
   "height.same": "mesmo nível",
   "height.above": "{n} m acima",
   "height.below": "{n} m abaixo",
@@ -22,16 +19,13 @@
   "height.above_you": "{n} m acima de você",
   "height.below_you": "{n} m abaixo de você",
   "height.unknown": "altura desconhecida",
-
   "status.closed": "Enshrouded fechado",
   "status.searching": "Procurando o personagem… ande alguns passos",
   "status.located": "Personagem localizado",
   "status.tracking": "Rastreando em tempo real",
-
   "top.relocate": "RELOCALIZAR",
   "top.relocate_title": "Use se a seta estiver no lugar errado: ande alguns passos depois de clicar",
   "top.alt": "Alt. {n} m",
-
   "ctx.pin_here": "📍 Marcar pin aqui",
   "ctx.route_here": "➜ Rota até aqui",
   "ctx.found_toggle": "✓ Encontrado / desfazer",
@@ -43,7 +37,6 @@
   "ctx.delete_game": "🗑 Apagar (também no jogo)",
   "ctx.rename_title": "Renomear (Enter confirma, Esc cancela)",
   "target.marked_point": "Ponto marcado",
-
   "tip.read": "✓ já lida (pelo seu save)",
   "tip.unread": "ainda não lida",
   "tip.level": "nível {n}",
@@ -58,7 +51,6 @@
   "tip.hp": "vida {hp}/{max}",
   "tip.opened": "já aberto",
   "tip.taken": "já pego",
-
   "live.alive": "{name} (vivo)",
   "live.creature": "Criatura",
   "loot.item": "item",
@@ -70,24 +62,20 @@
   "loot.ground": "No chão",
   "loot.ground_object": "Objeto no chão (isca/armadilha?)",
   "loot.monster": "Saque de monstro",
-
   "st.taken": "Já pego (não existe mais no jogo)",
   "st.opened": "Baú já aberto",
   "st.triggered": "Já acionado",
   "st.empty": "Nenhuma criatura viva aqui agora",
   "st.absent": "Conferido na memória: não existe mais no jogo",
-
   "toast.f8_nopos": "F8: posição do personagem ainda não lida",
   "toast.f8_none": "F8: nenhum marcador a menos de 25 m",
   "toast.hidden": "Escondido: {name} (volta em 30 min ou ao se afastar 300 m)",
   "dchip.title": "Mostrar de novo os escondidos com F8",
   "dchip.text_one": "F8: {n} escondido · mostrar",
   "dchip.text_other": "F8: {n} escondidos · mostrar",
-
   "export.copied": "Progresso copiado para a área de transferência.",
   "export.copy_prompt": "Copie o progresso:",
   "import.prompt": "Cole aqui o progresso exportado:",
-
   "pins.default": "Pin {n}",
   "pins.list_failed": "listar falhou",
   "pins.app_only": "só no app",
@@ -112,7 +100,6 @@
   "pins.delete_game": "apagar (também no jogo)",
   "pins.pending": "(pendente)",
   "pins.file": "Do arquivo ({n})",
-
   "live.character": "Personagem",
   "live.situation": "Situação",
   "live.position": "Posição",
@@ -123,14 +110,12 @@
   "live.flame_level": "Nível da Chama",
   "live.isolines": "Isolinhas a cada",
   "live.foot": "A posição é lida da memória do jogo (só leitura). Se aparecer \"procurando\", ande alguns passos para o programa identificar o personagem.",
-
   "nav.dead": "morto",
   "nav.gone": "saqueado / fora do alcance",
   "nav.view": "Ver no mapa",
   "nav.remove": "Remover destino",
   "nav.relative": "em relação à sua frente",
   "nav.waiting": "Aguardando a posição do personagem…",
-
   "near.title": "ATIVIDADES EM TEMPO REAL",
   "near.hide_taken": "Esconder o que já foi pego",
   "near.hide_taken_title": "Lido da memória do jogo: some o item já coletado, a runa já recolhida e o baú já saqueado",
@@ -150,36 +135,30 @@
   "ng.res": "Recursos",
   "ng.loot": "Saques",
   "ng.mark": "Marcadores",
-
   "noun.spawns": "pontos de surgimento",
   "noun.gather": "locais",
   "noun.ore": "depósitos",
   "noun.chests": "baús podem ter",
-
   "ores.title": "Minérios e minerais",
   "ores.count": "{n} depósitos",
   "ores.surface": "Ocultar depósitos enterrados",
   "ores.more": "Essência Arcaica, ossos e galhos ({n})",
-
   "quests.loading": "Carregando missões…",
   "quests.back": "‹ Voltar",
   "quests.view": "ver no mapa ›",
   "quests.search": "Buscar missões",
   "quests.steps_one": "{n} passo",
   "quests.steps_other": "{n} passos",
-
   "side.eyebrow": "Mapa interativo de Embervale",
   "tab.markers": "Marcadores",
   "tab.quests": "Missões",
   "tab.live": "Ao vivo",
   "tab.pins": "Pins",
-
   "search.placeholder": "Buscar lugares e marcadores",
   "search.place": "Lugar",
   "search.drops_from": "Dropa de: {list}",
   "search.show_on_map": "mostrar no mapa",
   "search.on_map": "no mapa",
-
   "tools.show_all": "Mostrar tudo",
   "tools.hide_all": "Ocultar tudo",
   "tools.place_names": "Nomes de lugares",
@@ -190,18 +169,15 @@
   "tools.chest_level_title": "Nível dos itens que o baú dá (zona da Chama). Vale para os baús dos marcadores e do Meu filtro.",
   "tools.to": "até",
   "tools.fog": "Névoa de guerra",
-
   "filter.title": "Meu filtro",
   "filter.empty": "Nada selecionado. Clique em chefes, criaturas, minérios ou itens abaixo para ir montando o que quer ver no mapa.",
   "filter.off": "Desligar",
   "filter.clear": "Limpar tudo",
-
   "act.title": "Atividades em tempo real",
   "act.near": "{n} perto",
   "act.off": "desligado",
   "act.radius": "Raio",
   "act.dungeon": "Modo dungeon",
-
   "find.placeholder": "Encontre uma criatura, planta, minério ou item de baú",
   "find.drops_from": "{item} — dropa de",
   "find.bosses": "Chefes",
@@ -213,12 +189,18 @@
   "find.on_one": "{n} ligado, ",
   "find.on_other": "{n} ligados, ",
   "find.drops": "Dropa: {list}",
-
   "groups.toggle": "Mostrar/ocultar o grupo",
   "progress.found": "{a} de {b} encontrados",
   "progress.export": "Exportar",
   "progress.export_title": "Salvar seu progresso num arquivo",
   "progress.import": "Importar",
   "progress.import_title": "Carregar progresso de um arquivo",
-  "status.markers": "{total} marcadores no mapa, {shown} nas categorias visíveis. Clique: rota · botão direito: marcar encontrado."
+  "status.markers": "{total} marcadores no mapa, {shown} nas categorias visíveis. Clique: rota · botão direito: marcar encontrado.",
+  "status.no_access": "Enshrouded aberto, mas sem permissão para ler",
+  "status.no_character": "Jogo aberto, personagem não encontrado",
+  "alert.no_access": "O Enshrouded está aberto, mas o Windows não deixa o mapa ler o jogo (código {code}). Isso acontece quando o jogo ou a Steam rodam como administrador. Reabra o mapa como administrador.",
+  "alert.no_access_admin": "O mapa já está como administrador e mesmo assim o Windows bloqueou a leitura do jogo (código {code}). Provavelmente é o antivírus: adicione o mapa à lista de exceções dele.",
+  "alert.no_character": "O jogo está aberto, mas nenhum personagem apareceu há mais de 2 minutos. Se você já está no mundo, esta versão do jogo pode ainda não ser compatível com o mapa.",
+  "alert.relaunch": "Reabrir como administrador",
+  "alert.relaunch_fail": "O Windows não reabriu o mapa como administrador."
 }

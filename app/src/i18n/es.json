@@ -195,5 +195,12 @@
   "progress.export_title": "Guardar tu progreso en un archivo",
   "progress.import": "Importar",
   "progress.import_title": "Cargar el progreso desde un archivo",
-  "status.markers": "{total} marcadores en el mapa, {shown} en las categorías visibles. Clic: ruta · clic derecho: marcar encontrado."
+  "status.markers": "{total} marcadores en el mapa, {shown} en las categorías visibles. Clic: ruta · clic derecho: marcar encontrado.",
+  "status.no_access": "Enshrouded abierto, pero sin permiso para leerlo",
+  "status.no_character": "Juego abierto, personaje no encontrado",
+  "alert.no_access": "Enshrouded está abierto, pero Windows no deja que el mapa lea el juego (código {code}). Pasa cuando el juego o Steam se ejecutan como administrador. Vuelve a abrir el mapa como administrador.",
+  "alert.no_access_admin": "El mapa ya se ejecuta como administrador y aun así Windows bloqueó la lectura del juego (código {code}). Lo más probable es el antivirus: añade el mapa a sus excepciones.",
+  "alert.no_character": "El juego está abierto, pero no ha aparecido ningún personaje en más de 2 minutos. Si ya estás en el mundo, puede que esta versión del juego aún no sea compatible con el mapa.",
+  "alert.relaunch": "Reabrir como administrador",
+  "alert.relaunch_fail": "Windows no volvió a abrir el mapa como administrador."
 }

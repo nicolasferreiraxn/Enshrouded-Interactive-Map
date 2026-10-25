@@ -14,10 +14,34 @@ use std::time::UNIX_EPOCH;
 use tauri::ipc::Response;
 use tauri::Emitter;
 
+// pasta da Steam: a do registro (SteamPath, vale para Steam instalada em qualquer disco) + os caminhos padrão
+fn steam_dirs() -> Vec<PathBuf> {
+    #[link(name = "advapi32")]
+    extern "system" {
+        fn RegGetValueW(key: isize, sub: *const u16, val: *const u16, flags: u32, ty: *mut u32, data: *mut u16, len: *mut u32) -> i32;
+    }
+    const HKCU: isize = 0x8000_0001u32 as i32 as isize;
+    let w = |s: &str| s.encode_utf16().chain([0]).collect::<Vec<u16>>();
+    let mut out = vec![];
+    let mut buf = vec![0u16; 1024];
+    let mut len = (buf.len() * 2) as u32;
+    let r = unsafe { RegGetValueW(HKCU, w(r"Software\Valve\Steam").as_ptr(), w("SteamPath").as_ptr(), 0x2, std::ptr::null_mut(), buf.as_mut_ptr(), &mut len) };
+    if r == 0 {
+        let n = buf.iter().position(|&c| c == 0).unwrap_or(0);
+        out.push(PathBuf::from(String::from_utf16_lossy(&buf[..n])));
+    }
+    for d in ["C:/Program Files (x86)/Steam", "C:/Program Files/Steam"] {
+        if !out.iter().any(|o| o.to_string_lossy().replace('\\', "/").eq_ignore_ascii_case(d)) {
+            out.push(PathBuf::from(d));
+        }
+    }
+    out
+}
+
 fn saves() -> Vec<PathBuf> {
     let mut out = vec![];
-    for root in ["C:/Program Files (x86)/Steam/userdata", "C:/Program Files/Steam/userdata"] {
-        let Ok(users) = fs::read_dir(root) else { continue };
+    for root in steam_dirs().into_iter().map(|d| d.join("userdata")) {
+        let Ok(users) = fs::read_dir(&root) else { continue };
         for u in users.flatten() {
             let dir = u.path().join("1203620").join("remote");
             let Ok(files) = fs::read_dir(&dir) else { continue };
@@ -147,6 +171,22 @@ async fn game_connect() -> Result<String, String> {
 #[tauri::command]
 async fn ore_state(deps: Vec<[f32; 5]>) -> Vec<u8> {
     tauri::async_runtime::spawn_blocking(move || terreno::ore_state(&deps)).await.unwrap_or_default()
+}
+
+// reabre o mapa como administrador (o jogo rodando elevado não deixa um programa comum ler a memória dele)
+#[tauri::command]
+fn relaunch_admin() -> Result<(), String> {
+    #[link(name = "shell32")]
+    extern "system" {
+        fn ShellExecuteW(hwnd: isize, op: *const u16, file: *const u16, params: *const u16, dir: *const u16, show: i32) -> isize;
+    }
+    let exe = std::env::current_exe().map_err(|e| e.to_string())?;
+    let w = |s: &str| s.encode_utf16().chain([0]).collect::<Vec<u16>>();
+    let r = unsafe { ShellExecuteW(0, w("runas").as_ptr(), w(&exe.to_string_lossy()).as_ptr(), std::ptr::null(), std::ptr::null(), 1) };
+    if r <= 32 {
+        return Err(format!("ShellExecute {r}")); // inclui o usuário recusar o aviso do Windows
+    }
+    std::process::exit(0);
 }
 
 #[tauri::command]
@@ -301,7 +341,7 @@ fn main() {
             });
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![current_save, fog_of_war, relocate, my_pins, game_pins, game_connect, save_my_pins, player_knowledge, ore_state])
+        .invoke_handler(tauri::generate_handler![current_save, fog_of_war, relocate, my_pins, game_pins, game_connect, save_my_pins, player_knowledge, ore_state, relaunch_admin])
         .run(tauri::generate_context!())
         .expect("falha ao iniciar o mapa");
 }
