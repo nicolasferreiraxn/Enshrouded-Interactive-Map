@@ -61,7 +61,7 @@ map just checks every marker against memory and removes whatever no longer exist
 **Requirements:** Windows 10/11 · Enshrouded 1.0 (Steam). Tested in October 2026 — a game update may break parts
 until a new version comes out.
 
-**Privacy:** nothing leaves your machine. No internet, no telemetry, no account.
+**Privacy:** nothing about you or your game leaves your machine. No telemetry, no account. The only internet access is one check of the latest version on GitHub when the map opens; it never downloads anything by itself.
 
 ## ⚙️ How it works
 

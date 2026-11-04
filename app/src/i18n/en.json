@@ -85,6 +85,7 @@
   "pins.linked": "Linked to the game map · {n} markers",
   "pins.connecting": "Connecting to the game…",
   "pins.game_closed": "Game closed: new pins go to the game when it opens",
+  "pins.linux_unavailable": "Pin sync with the in-game map isn’t available on Linux (Proton/Wine). Everything else works.",
   "pins.name_placeholder": "Name of the next pin",
   "pins.mode_on": "✓ CLICK ON THE MAP (turn off)",
   "pins.mode_off": "＋ ADD ON THE MAP",
@@ -202,5 +203,8 @@
   "alert.no_access_admin": "The map is already running as administrator and Windows still blocked reading the game (code {code}). It's most likely your antivirus: add the map to its exceptions list.",
   "alert.no_character": "The game is running, but no character has shown up for over 2 minutes. If you're already in the world, this game version may not be supported by the map yet.",
   "alert.relaunch": "Reopen as administrator",
-  "alert.relaunch_fail": "Windows didn't reopen the map as administrator."
+  "alert.relaunch_fail": "Windows didn't reopen the map as administrator.",
+  "update.available": "A new version of the map is available: {version} (you have {current}).",
+  "update.open": "Download page",
+  "update.dismiss": "Dismiss"
 }

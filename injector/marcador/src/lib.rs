@@ -293,7 +293,7 @@ unsafe fn executar(r: usize, ad: &Addrs, p: Pedido) -> String {
             let f: FnAdd = std::mem::transmute(ad.add);
             f(out.as_mut_ptr(), r, pos.as_ptr(), cor, icone, &sv);
             let code = out[0] as u8;
-            if code != 0 { return format!("{{\"ok\":false,\"erro\":\"jogo recusou (codigo {code:#x}; 0x27 = sem espaco)\"}}"); }
+            if code != 0 { return format!("{{\"ok\":false,\"erro\":\"game refused (code {code:#x}; 0x27 = no free slot)\"}}"); }
             let ult = std::ptr::read_volatile((r + 0x88) as *const u64) as usize;
             let idx = if ult != 0 { rd32(ult + 0xa8) } else { u32::MAX };
             log(&format!("criado #{idx} '{}' em x {x:.1} z {z:.1}", String::from_utf8_lossy(b)));
@@ -327,7 +327,7 @@ fn enfileirar(p: Pedido) -> String {
         None => {
             // tira o pedido da fila para não rodar depois sem ninguém esperando
             FILA.lock().unwrap().retain(|(_, r)| !Arc::ptr_eq(r, &resp));
-            "{\"ok\":false,\"erro\":\"timeout: o jogo nao processou em 5 s (tela de carregamento? registro indisponivel?)\"}".into()
+            "{\"ok\":false,\"erro\":\"timeout: the game did not process it in 5 s (tela de carregamento? registro indisponivel?)\"}".into()
         }
     }
 }

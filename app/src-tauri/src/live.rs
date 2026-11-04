@@ -302,34 +302,50 @@ fn archetypes(p: &Proc, win: (u64, u64), buf: &[u8]) -> (Arch, Locks) {
     let mut out = HashMap::new();
     let mut locks = HashMap::new();
     let hs: HashMap<u64, usize> = chunk_headers(buf).into_iter().map(|(o, n)| (win.0 + o as u64, n)).collect();
-    let mut page = vec![0u8; 4 << 20];
-    let mut off = 0usize;
-    while off < ARCH_SIZE {
-        let n = p.read(ARCH_BASE + off as u64, &mut page);
-        let mut pg = 0;
-        while pg + 0x3c0 + 0x800 <= n {
-            let d = &page[pg + 0x3c0..pg + 0x3c0 + 0x800];
-            let head = rd_u64(d, 0x50);
-            if hs.contains_key(&head) {
-                let ct = rd_u16(d, 0xa0 + 2 * CID_CURRENT_TRANSFORM) as usize;
-                let nh = rd_u16(d, 0xa0 + 2 * CID_NETWORK_HEALTH) as usize;
-                let lk = rd_u16(d, 0xa0 + 2 * CID_CLIENT_INTERACTION_LOCK) as usize;
-                let tg = rd_u16(d, 0xa0 + 2 * CID_CLIENT_TOGGLE_STATE) as usize;
-                let co = rd_u16(d, 0xa0 + 2 * CID_CLIENT_INTERACTION_OFFER) as usize;
-                if ct != 0 && (lk != 0 || tg != 0 || co != 0) {
-                    for h in arch_chunks(head, &hs, win, buf) {
-                        locks.insert(h, (ct, lk, tg, co));
-                    }
-                }
-                if ct != 0 && nh != 0 {
-                    for h in arch_chunks(head, &hs, win, buf) {
-                        out.insert(h, (ct, nh));
-                    }
-                }
-            }
-            pg += 0x1000;
+    let mut add = |d: &[u8]| {
+        let head = rd_u64(d, 0x50);
+        if !hs.contains_key(&head) {
+            return;
         }
-        off += page.len();
+        let ct = rd_u16(d, 0xa0 + 2 * CID_CURRENT_TRANSFORM) as usize;
+        let nh = rd_u16(d, 0xa0 + 2 * CID_NETWORK_HEALTH) as usize;
+        let lk = rd_u16(d, 0xa0 + 2 * CID_CLIENT_INTERACTION_LOCK) as usize;
+        let tg = rd_u16(d, 0xa0 + 2 * CID_CLIENT_TOGGLE_STATE) as usize;
+        let co = rd_u16(d, 0xa0 + 2 * CID_CLIENT_INTERACTION_OFFER) as usize;
+        if ct != 0 && (lk != 0 || tg != 0 || co != 0) {
+            for h in arch_chunks(head, &hs, win, buf) {
+                locks.insert(h, (ct, lk, tg, co));
+            }
+        }
+        if ct != 0 && nh != 0 {
+            for h in arch_chunks(head, &hs, win, buf) {
+                out.insert(h, (ct, nh));
+            }
+        }
+    };
+    // Archetype descriptors: one per 4 KB page, first chunk pointer at descriptor +0x50, component offset table
+    // at +0xa0. Up to game build 1273043 they sat at 0x300'4000'0000 with the descriptor at page +0x3c0; since
+    // build 1285601 they sit inside the chunk window with the descriptor at page -0x40. Both layouts are looked
+    // for in the window that was just read, so the next move doesn't need a fixed address.
+    for pg in (0x1000..buf.len()).step_by(0x1000) {
+        for d in [pg - 0x40, pg + 0x3c0] {
+            if d + 0x800 <= buf.len() {
+                add(&buf[d..d + 0x800]);
+            }
+        }
+    }
+    if ARCH_BASE + ARCH_SIZE as u64 <= win.0 || ARCH_BASE >= win.1 {
+        let mut page = vec![0u8; 4 << 20];
+        let mut off = 0usize;
+        while off < ARCH_SIZE {
+            let n = p.read(ARCH_BASE + off as u64, &mut page);
+            let mut pg = 0;
+            while pg + 0x3c0 + 0x800 <= n {
+                add(&page[pg + 0x3c0..pg + 0x3c0 + 0x800]);
+                pg += 0x1000;
+            }
+            off += page.len();
+        }
     }
     (out, locks)
 }

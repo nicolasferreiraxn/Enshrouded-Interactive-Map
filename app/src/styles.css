@@ -350,3 +350,4 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .live.sem_personagem i { background: #d88a3a; }
 .alertbar { position: absolute; top: 64px; left: 50%; transform: translateX(-50%); z-index: 2000; display: flex; align-items: center; gap: 14px; max-width: min(900px, 92vw); padding: 10px 16px; background: #2a1410f2; border: 1px solid #e0533a99; border-radius: 6px; color: #f3dccf; font-size: 14px; line-height: 1.4; box-shadow: 0 6px 24px #0008; }
 .alertbar .btn { flex: none; }
+.updatebar { background: #10202af2; border-color: #3a9be099; color: #d6ebf7; }

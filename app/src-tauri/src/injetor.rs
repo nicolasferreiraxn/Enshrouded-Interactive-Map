@@ -49,36 +49,51 @@ fn ja_carregada(pid: u32) -> bool {
 }
 
 /// carrega a DLL no jogo (nada a fazer se já estiver carregada)
+// Wine/Proton exposes wine_get_version in its ntdll; real Windows doesn't.
+fn sob_wine() -> bool {
+    unsafe {
+        let nt = GetModuleHandleW(w("ntdll.dll").as_ptr());
+        !nt.is_null() && !GetProcAddress(nt, b"wine_get_version\0".as_ptr()).is_null()
+    }
+}
+
 pub fn injetar() -> Result<(), String> {
-    let pid = crate::tracker::find_pid().ok_or("enshrouded.exe não está aberto")?;
+    // Under Linux (Proton/Wine), loading the pins DLL into the running game is the step reported to break the map
+    // while the game runs. Skip it there: the live map (position, monsters, chests) only reads memory and keeps
+    // working; only syncing pins with the in-game map is unavailable.
+    if sob_wine() {
+        // "wine" is a sentinel the UI turns into a translated message (pins.linux_unavailable)
+        return Err("wine".into());
+    }
+    let pid = crate::tracker::find_pid().ok_or("enshrouded.exe is not running")?;
     if ja_carregada(pid) { return Ok(()); }
     let hash = DLL.iter().fold(0xcbf2_9ce4_8422_2325u64, |h, &b| (h ^ b as u64).wrapping_mul(0x100_0000_01b3)); // FNV-1a 64
     let copia = std::env::temp_dir().join(format!("{NOME_DLL}_{hash:016x}.dll"));
     if std::fs::metadata(&copia).map_or(true, |m| m.len() != DLL.len() as u64) {
-        std::fs::write(&copia, DLL).map_err(|e| format!("gravar DLL: {e}"))?;
+        std::fs::write(&copia, DLL).map_err(|e| format!("writing the pins DLL: {e}"))?;
     }
     let caminho = w(&copia.to_string_lossy());
     unsafe {
         let h = OpenProcess(0x2 | 0x8 | 0x10 | 0x20 | 0x400, 0, pid); // CREATE_THREAD|VM_OPERATION|VM_READ|VM_WRITE|QUERY_INFORMATION
-        if h == 0 { return Err(format!("OpenProcess falhou ({})", GetLastError())); }
+        if h == 0 { return Err(format!("OpenProcess failed ({})", GetLastError())); }
         let n = caminho.len() * 2;
         let mem = VirtualAllocEx(h, std::ptr::null_mut(), n, 0x3000, 0x04);
-        if mem.is_null() { CloseHandle(h); return Err("VirtualAllocEx falhou".into()); }
+        if mem.is_null() { CloseHandle(h); return Err("VirtualAllocEx failed".into()); }
         let mut esc = 0usize;
         if WriteProcessMemory(h, mem, caminho.as_ptr() as *const c_void, n, &mut esc) == 0 {
-            VirtualFreeEx(h, mem, 0, 0x8000); CloseHandle(h); return Err("WriteProcessMemory falhou".into());
+            VirtualFreeEx(h, mem, 0, 0x8000); CloseHandle(h); return Err("WriteProcessMemory failed".into());
         }
         let k32 = GetModuleHandleW(w("kernel32.dll").as_ptr());
         let llw = GetProcAddress(k32, b"LoadLibraryW\0".as_ptr());
         let th = CreateRemoteThread(h, std::ptr::null_mut(), 0, llw, mem, 0, std::ptr::null_mut());
-        if th == 0 { VirtualFreeEx(h, mem, 0, 0x8000); CloseHandle(h); return Err(format!("CreateRemoteThread falhou ({})", GetLastError())); }
+        if th == 0 { VirtualFreeEx(h, mem, 0, 0x8000); CloseHandle(h); return Err(format!("CreateRemoteThread failed ({})", GetLastError())); }
         WaitForSingleObject(th, 15000);
         let mut code = 0u32;
         GetExitCodeThread(th, &mut code);
         CloseHandle(th);
         VirtualFreeEx(h, mem, 0, 0x8000);
         CloseHandle(h);
-        if code == 0 { return Err("LoadLibraryW devolveu NULL no jogo".into()); }
+        if code == 0 { return Err("LoadLibraryW returned NULL in the game".into()); }
     }
     Ok(())
 }

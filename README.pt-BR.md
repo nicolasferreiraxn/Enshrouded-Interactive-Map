@@ -61,7 +61,7 @@ cada marcador na memória e tira o que não existe mais.
 **Requisitos:** Windows 10/11 · Enshrouded 1.0 (Steam). Testado em outubro de 2026 — uma atualização do jogo
 pode quebrar partes até sair versão nova.
 
-**Privacidade:** nada sai da sua máquina. Sem internet, sem telemetria, sem conta.
+**Privacidade:** nada sobre você ou o seu jogo sai da sua máquina. Sem telemetria, sem conta. O único acesso à internet é uma consulta da versão mais recente no GitHub quando o mapa abre; ele nunca baixa nada sozinho.
 
 ## ⚙️ Como funciona
 

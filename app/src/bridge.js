@@ -70,6 +70,31 @@ export async function relaunchAdmin() {
   return invoke('relaunch_admin');
 }
 
+// opens the release page (fixed URL, in the Rust side) in the default browser
+export async function openReleases() {
+  if (!T) return;
+  const { invoke } = await import('@tauri-apps/api/core');
+  return invoke('open_releases');
+}
+
+// New-version check: one request to GitHub for the latest release tag. Only reads; nothing is downloaded or sent.
+// Returns the tag (e.g. "v1.0.4") when it's newer than `current`, otherwise null (also on any network error).
+export async function newerRelease(current) {
+  try {
+    const r = await fetch('https://api.github.com/repos/nicolasferreiraxn/Enshrouded-Interactive-Map/releases/latest', { headers: { Accept: 'application/vnd.github+json' } });
+    if (!r.ok) return null;
+    const tag = (await r.json()).tag_name || '';
+    const n = (v) => v.replace(/^v/i, '').split('.').map((x) => parseInt(x, 10) || 0);
+    const [a, b] = [n(tag), n(current)];
+    for (let i = 0; i < Math.max(a.length, b.length); i++) {
+      if ((a[i] || 0) !== (b[i] || 0)) return (a[i] || 0) > (b[i] || 0) ? tag : null;
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
 export async function relocate() {
   if (!T) return;
   const { invoke } = await import('@tauri-apps/api/core');

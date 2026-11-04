@@ -85,6 +85,7 @@
   "pins.linked": "Mit der Spielkarte verbunden · {n} Markierungen",
   "pins.connecting": "Verbinde mit dem Spiel …",
   "pins.game_closed": "Spiel geschlossen: neue Pins kommen ins Spiel, sobald es geöffnet ist",
+  "pins.linux_unavailable": "Die Pin-Synchronisierung mit der Spielkarte ist unter Linux (Proton/Wine) nicht verfügbar. Alles andere funktioniert.",
   "pins.name_placeholder": "Name des nächsten Pins",
   "pins.mode_on": "✓ AUF DIE KARTE KLICKEN (ausschalten)",
   "pins.mode_off": "＋ AUF DER KARTE HINZUFÜGEN",
@@ -202,5 +203,8 @@
   "alert.no_access_admin": "Die Karte läuft bereits als Administrator und Windows hat das Lesen trotzdem blockiert (Code {code}). Wahrscheinlich ist es dein Virenschutz: füge die Karte zu dessen Ausnahmen hinzu.",
   "alert.no_character": "Das Spiel läuft, aber seit über 2 Minuten ist kein Charakter erschienen. Wenn du schon in der Welt bist, wird diese Spielversion von der Karte eventuell noch nicht unterstützt.",
   "alert.relaunch": "Als Administrator neu starten",
-  "alert.relaunch_fail": "Windows hat die Karte nicht als Administrator gestartet."
+  "alert.relaunch_fail": "Windows hat die Karte nicht als Administrator gestartet.",
+  "update.available": "Eine neue Version der Karte ist verfügbar: {version} (du hast {current}).",
+  "update.open": "Download-Seite",
+  "update.dismiss": "Ausblenden"
 }

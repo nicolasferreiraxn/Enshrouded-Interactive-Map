@@ -2,7 +2,8 @@ import { icSrc } from './match.js';
 import { fmatch } from './match.js';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import L from 'leaflet';
-import { onPlayer, onDismiss, onLive, currentSave, fogOfWar, relocate, myPins, gameConnect, gameReq, saveMyPins, playerKnowledge, oreState, relaunchAdmin } from './bridge.js';
+import { onPlayer, onDismiss, onLive, currentSave, fogOfWar, relocate, myPins, gameConnect, gameReq, saveMyPins, playerKnowledge, oreState, relaunchAdmin, openReleases, newerRelease } from './bridge.js';
+import pkg from '../package.json';
 import { loadNearby, bearing, dirName, heightText } from './nearby.js';
 import { GameMapLayer } from './gamemap.js';
 import Sidebar from './Sidebar.jsx';
@@ -300,6 +301,15 @@ export default function App() {
   const dismissedRef = useRef(dismissed);
   dismissedRef.current = dismissed;
   const [toast, setToast] = useState(null);
+  // newer release on GitHub (checked once on start); dismissed per version
+  const [update, setUpdate] = useState(null);
+  useEffect(() => {
+    newerRelease(pkg.version).then((tag) => {
+      let seen = null;
+      try { seen = localStorage.getItem('embervale.updateDismissed'); } catch {}
+      if (tag && tag !== seen) setUpdate(tag);
+    });
+  }, []);
   const [showHidden, setShowHidden] = useState(false);
   const [hidQ, setHidQ] = useState(''); // busca dentro da lista de ocultos
   // ocultar por nome (olho), guardando o ícone para a lista de ocultos
@@ -786,8 +796,11 @@ export default function App() {
           await refreshGame();
         }
       } catch (e) {
-        connected = false; nextTry = Date.now() + 15000;
-        if (alive) { setGamePins(null); setGameErr(String(e.message || e)); }
+        const msg = String(e.message || e);
+        // on Linux (Proton/Wine) pin sync can't work at all: say so once and stop retrying
+        const linux = msg === 'wine';
+        connected = false; nextTry = linux ? Infinity : Date.now() + 15000;
+        if (alive) { setGamePins(null); setGameErr(linux ? t('pins.linux_unavailable') : msg); }
       }
     };
     tick();
@@ -1124,6 +1137,13 @@ export default function App() {
         {isLive && <div className="coords">X {Math.round(player.x)} · Z {Math.round(player.z)} · {t('top.alt', { n: Math.round(player.y) })}</div>}
       </header>
       {alertBar}
+      {!alertBar && update && (
+        <div className="alertbar updatebar">
+          <span>{t('update.available', { version: update, current: `v${pkg.version}` })}</span>
+          <button className="btn" onClick={() => openReleases()}>{t('update.open')}</button>
+          <button className="btn" onClick={() => { try { localStorage.setItem('embervale.updateDismissed', update); } catch {} setUpdate(null); }}>{t('update.dismiss')}</button>
+        </div>
+      )}
       <aside className="side">
         <Sidebar data={data} tab={tab} setTab={setTab} query={query} setQuery={setQuery}
           results={results.map((r) => ({ ...r, dist: isLive ? m(Math.hypot(r.x - player.x, r.z - player.z)) : null }))}
@@ -1134,7 +1154,7 @@ export default function App() {
           onExport={onExport} onImport={onImport} findIndex={findIndex} surfaceOnly={surfaceOnly} setSurfaceOnly={setSurfaceOnly}
           pinsBox={(
           <div className="pinsbox">
-            <div className={`gamestate ${gamePins ? 'on' : ''}`}>{gamePins ? t('pins.linked', { n: gamePins.length }) : isLive ? `${t('pins.connecting')}${gameErr ? ` (${gameErr})` : ''}` : t('pins.game_closed')}</div>
+            <div className={`gamestate ${gamePins ? 'on' : ''}`}>{gamePins ? t('pins.linked', { n: gamePins.length }) : isLive ? (gameErr === t('pins.linux_unavailable') ? gameErr : `${t('pins.connecting')}${gameErr ? ` (${gameErr})` : ''}`) : t('pins.game_closed')}</div>
             <div className="row">
               <input className="pinname" placeholder={t('pins.name_placeholder')} value={pinName} onChange={(e) => setPinName(e.target.value)} maxLength={120} />
             </div>

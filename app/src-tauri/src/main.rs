@@ -128,10 +128,10 @@ fn game_pipe(req: &str) -> Result<String, String> {
         match fs::OpenOptions::new().read(true).write(true).open(GAME_PIPE) {
             Ok(x) => { f = Some(x); break; }
             Err(e) if e.raw_os_error() == Some(231) => std::thread::sleep(std::time::Duration::from_millis(50)), // ocupado
-            Err(e) => return Err(format!("sem conexão com o jogo ({e})")),
+            Err(e) => return Err(format!("no connection to the game ({e})")),
         }
     }
-    let mut f = f.ok_or("pipe ocupado")?;
+    let mut f = f.ok_or("game connection busy")?;
     f.write_all(format!("{}
 ", req.trim()).as_bytes()).map_err(|e| e.to_string())?;
     let mut s = String::new();
@@ -189,10 +189,23 @@ fn relaunch_admin() -> Result<(), String> {
     std::process::exit(0);
 }
 
+// Opens the map's release page in the default browser. The URL is fixed: nothing from the page or from the
+// network decides what gets opened.
+#[tauri::command]
+fn open_releases() {
+    #[link(name = "shell32")]
+    extern "system" {
+        fn ShellExecuteW(hwnd: isize, op: *const u16, file: *const u16, params: *const u16, dir: *const u16, show: i32) -> isize;
+    }
+    let w = |s: &str| s.encode_utf16().chain([0]).collect::<Vec<u16>>();
+    let url = "https://github.com/nicolasferreiraxn/Enshrouded-Interactive-Map/releases/latest";
+    unsafe { ShellExecuteW(0, w("open").as_ptr(), w(url).as_ptr(), std::ptr::null(), std::ptr::null(), 1) };
+}
+
 #[tauri::command]
 fn save_my_pins(json: String) -> Result<(), String> {
     serde_json::from_str::<serde_json::Value>(&json).map_err(|e| e.to_string())?;
-    let p = std::env::current_exe().map_err(|e| e.to_string())?.parent().ok_or("sem pasta")?.join("meus-marcadores.json");
+    let p = std::env::current_exe().map_err(|e| e.to_string())?.parent().ok_or("no folder next to the map")?.join("meus-marcadores.json");
     fs::write(p, json).map_err(|e| e.to_string())
 }
 
@@ -341,7 +354,7 @@ fn main() {
             });
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![current_save, fog_of_war, relocate, my_pins, game_pins, game_connect, save_my_pins, player_knowledge, ore_state, relaunch_admin])
+        .invoke_handler(tauri::generate_handler![current_save, fog_of_war, relocate, my_pins, game_pins, game_connect, save_my_pins, player_knowledge, ore_state, relaunch_admin, open_releases])
         .run(tauri::generate_context!())
         .expect("falha ao iniciar o mapa");
 }

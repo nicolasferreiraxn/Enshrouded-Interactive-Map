@@ -85,6 +85,7 @@
   "pins.linked": "Ligado ao mapa do jogo · {n} marcadores",
   "pins.connecting": "Conectando ao jogo…",
   "pins.game_closed": "Jogo fechado: pins novos vão para o jogo quando ele abrir",
+  "pins.linux_unavailable": "A sincronização de pins com o mapa do jogo não funciona no Linux (Proton/Wine). O resto funciona normalmente.",
   "pins.name_placeholder": "Nome do próximo pin",
   "pins.mode_on": "✓ CLIQUE NO MAPA (desligar)",
   "pins.mode_off": "＋ ADICIONAR NO MAPA",
@@ -202,5 +203,8 @@
   "alert.no_access_admin": "O mapa já está como administrador e mesmo assim o Windows bloqueou a leitura do jogo (código {code}). Provavelmente é o antivírus: adicione o mapa à lista de exceções dele.",
   "alert.no_character": "O jogo está aberto, mas nenhum personagem apareceu há mais de 2 minutos. Se você já está no mundo, esta versão do jogo pode ainda não ser compatível com o mapa.",
   "alert.relaunch": "Reabrir como administrador",
-  "alert.relaunch_fail": "O Windows não reabriu o mapa como administrador."
+  "alert.relaunch_fail": "O Windows não reabriu o mapa como administrador.",
+  "update.available": "Há uma versão nova do mapa: {version} (você tem a {current}).",
+  "update.open": "Página de download",
+  "update.dismiss": "Dispensar"
 }
