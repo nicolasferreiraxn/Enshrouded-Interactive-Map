@@ -2,6 +2,12 @@
 
 *Leia em [português](CHANGELOG.pt-BR.md).*
 
+## 1.1.1 — 2026-11-04
+
+- **French.** The map is now available in French (Français), the 6th language: interface translated and
+  game names (items, creatures, places, quests) taken from the game's official French text. Picked
+  automatically when your system is in French; you can also choose it in the language menu.
+
 ## 1.1.0 — 2026-11-04
 
 - **Monsters are back.** After the November 2026 game update (build 1285601) the map stopped showing

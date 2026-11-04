@@ -2,6 +2,12 @@
 
 *Read this in [English](CHANGELOG.md).*
 
+## 1.1.1 — 04/11/2026
+
+- **Francês.** O mapa agora está disponível em francês (Français), o 6º idioma: interface traduzida e nomes do
+  jogo (itens, criaturas, lugares, missões) tirados dos textos oficiais do jogo em francês. Escolhido
+  sozinho quando o sistema está em francês; também dá para escolher no menu de idioma.
+
 ## 1.1.0 — 04/11/2026
 
 - **Os monstros voltaram.** Depois da atualização do jogo de novembro de 2026 (build 1285601), o mapa parou de

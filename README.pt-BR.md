@@ -18,7 +18,7 @@
 </p>
 
 <p align="center">
-  🇧🇷 Português · 🇺🇸 <a href="README.md">English</a> · 🇪🇸 Español · 🇩🇪 Deutsch · 🇨🇳 简体中文
+  🇧🇷 Português · 🇺🇸 <a href="README.md">English</a> · 🇪🇸 Español · 🇩🇪 Deutsch · 🇫🇷 Français · 🇨🇳 简体中文
 </p>
 
 ---
@@ -47,7 +47,7 @@ cada marcador na memória e tira o que não existe mais.
 | ⛏️ **Minério esgotado** | o node sai do mapa quando você termina de minerar |
 | 📍 **Pins sincronizados** | criar, apagar ou renomear no app muda no mapa do jogo — e vice-versa |
 | 🔎 **Busca inteligente** | ache qualquer item e veja quem dropa; **Meu filtro** mostra só o que você está caçando |
-| 🌍 **5 idiomas** | com os nomes **oficiais** do jogo em cada um |
+| 🌍 **6 idiomas** | com os nomes **oficiais** do jogo em cada um |
 | 🧵 **Rota e atalhos** | rota até qualquer ponto; **F8** esconde o ponto mais perto |
 
 ## 🚀 Começando

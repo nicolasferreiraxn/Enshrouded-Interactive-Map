@@ -6,6 +6,7 @@ import ptBR from './i18n/pt-BR.json';
 import en from './i18n/en.json';
 import es from './i18n/es.json';
 import de from './i18n/de.json';
+import fr from './i18n/fr.json';
 import zhCN from './i18n/zh-CN.json';
 
 export const LANGS = [
@@ -13,9 +14,10 @@ export const LANGS = [
   { code: 'en', name: 'English' },
   { code: 'es', name: 'Español' },
   { code: 'de', name: 'Deutsch' },
+  { code: 'fr', name: 'Français' },
   { code: 'zh-CN', name: '简体中文' },
 ];
-const UI = { 'pt-BR': ptBR, en, es, de, 'zh-CN': zhCN };
+const UI = { 'pt-BR': ptBR, en, es, de, fr, 'zh-CN': zhCN };
 const KEY = 'embervale.lang';
 
 // idioma inicial: o salvo, senão o do sistema, senão inglês
@@ -26,6 +28,7 @@ function initial() {
   if (l.startsWith('pt')) return 'pt-BR';
   if (l.startsWith('es')) return 'es';
   if (l.startsWith('de')) return 'de';
+  if (l.startsWith('fr')) return 'fr';
   if (l.startsWith('zh')) return 'zh-CN';
   return 'en';
 }

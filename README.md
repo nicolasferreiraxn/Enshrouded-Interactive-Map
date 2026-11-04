@@ -18,7 +18,7 @@
 </p>
 
 <p align="center">
-  🇺🇸 English · 🇧🇷 <a href="README.pt-BR.md">Português</a> · 🇪🇸 Español · 🇩🇪 Deutsch · 🇨🇳 简体中文
+  🇺🇸 English · 🇧🇷 <a href="README.pt-BR.md">Português</a> · 🇪🇸 Español · 🇩🇪 Deutsch · 🇫🇷 Français · 🇨🇳 简体中文
 </p>
 
 ---
@@ -47,7 +47,7 @@ map just checks every marker against memory and removes whatever no longer exist
 | ⛏️ **Depleted ore** | the node leaves the map once you finish mining it |
 | 📍 **Synced pins** | creating, deleting or renaming in the app changes the in-game map — and vice versa |
 | 🔎 **Smart search** | find any item and see who drops it; **My filter** shows only what you're hunting |
-| 🌍 **5 languages** | with the game's **official** names in each one |
+| 🌍 **6 languages** | with the game's **official** names in each one |
 | 🧵 **Routes and shortcuts** | route to any point; **F8** hides the closest point |
 
 ## 🚀 Getting started
